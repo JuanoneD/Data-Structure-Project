@@ -1,37 +1,46 @@
 #ifndef  Structs
 #define Structs 
-    typedef struct Movie Movie;
+    typedef struct movie movie;
+    typedef struct node node;
 
-    struct Movie
+    struct node
+    {
+        movie * movie;
+        node * next;
+    };
+    
+
+    struct movie
     {
         int id;
         char * title;
-        Movie * next;
+        node * neighbors;
 
     };
+
     
-    Movie construct_movie(int id,char *title,Movie * next)
+    movie construct_movie(int id,char *title,node * next)
     {
-        Movie new_movie;
+        movie new_movie;
         new_movie.id = id;
         new_movie.title = title;
-        new_movie.next = next;
+        new_movie.neighbors = next;
         return new_movie;
     }
     
 
-    typedef struct Actor
+    typedef struct actor
     {
         int id;
         char * name;
-        Movie * movies;
+        node * movies;
 
-    }Actor;
+    }actor;
 
     
-    Actor construct_actor(int id,char * name,Movie * movies)
+    actor construct_actor(int id,char * name,node * movies)
     {
-        Actor new_actor;
+        actor new_actor;
         new_actor.id = id;
         new_actor.name = name;
         new_actor.movies = movies;
