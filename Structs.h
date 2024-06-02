@@ -8,6 +8,24 @@
         movie * movie;
         node * next;
     };
+
+
+    void destruct_node(node * current)
+    {
+        if(!current)
+        {
+            return;
+        }
+
+        destruct_node(current->next);
+        // if(current->movie)
+        // {
+        //     free(current->movie->title);
+        //     free(current->movie);
+        // }
+        
+        free(current);
+    }
     
 
     struct movie
