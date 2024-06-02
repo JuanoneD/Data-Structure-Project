@@ -82,6 +82,18 @@
         array->movies[array->size++] = new_movie;
     }
 
+    void destruct_array_movies(array_movies * array)
+    {
+        for(int i = 0;i<array->size;i++)
+        {
+            destruct_node((*array).movies[i].neighbors);
+            free((*array).movies[i].title);
+        }
+        free(array->movies);
+        free(array);
+    }
+
+
 
     
 
