@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-void actor_split_buffer(char * buffer,char **char_id,char **name,char **movies){
+void actor_split_buffer(char * buffer,int *id,char **name,char **movies){
 
     int i = 0;
     char * new_char_id = malloc(10 * sizeof(char));
@@ -15,7 +15,7 @@ void actor_split_buffer(char * buffer,char **char_id,char **name,char **movies){
         new_char_id[i++] = *buffer++;
     }
     new_char_id[i] = '\0';
-    *char_id = new_char_id;
+    id = atoi(new_char_id + 2);
     buffer++;
 
     i = 0;
@@ -83,8 +83,8 @@ void movie_split_buffer(char * buffer,int *id,char ** type,char ** title)
 int main()
 {
     char * buffer = (char*)malloc(1000*sizeof(char));
-    char * char_id,*name,*movies,*type;
-    int int_id;
+    char *name,*movies,*type;
+    int id;
     int i = 0;
 
     array_movies * array_movie = construct_array_movie();
@@ -94,7 +94,7 @@ int main()
     while (fgets(buffer,999,arq))
     {   
         for (int j =0;j<5000;j++){
-            movie_split_buffer(buffer,&int_id,&type,&name);
+            movie_split_buffer(buffer,&id,&type,&name);
             
             // if(type[0] == 'm' && type[1] == 'o' && type[2] == 'v' && type[3] == 'i' && type[4] == 'e')
             if (strncmp(type, "movie", 5) == 0) 
@@ -139,9 +139,8 @@ int main()
 
     //     if(i++ != 0)
     //     {
-    //        actor_split_buffer(buffer,&char_id,&name,&movies);
-    //        printf("\nchar_ID: %s",char_id);
-    //        free(char_id);
+    //        actor_split_buffer(buffer,&id,&name,&movies);
+    //        printf("\nchar_ID: %i",id);
     //        printf("\nName: %s",name);
     //        free(name);
     //        printf("\nMovies: %s",movies);
