@@ -87,25 +87,44 @@ int main()
     int int_id;
     int i = 0;
 
-    FILE * arq = fopen("title.basics2.tsv","r");
+    array_movies * array_movie = construct_array_movie();
+
+    FILE * arq = fopen("title.basics.tsv","r");
 
     while (fgets(buffer,999,arq))
-    {
-        if(i++ != 0)
-        {  
+    {   
+        for (int j =0;j<1000;j++){
             movie_split_buffer(buffer,&int_id,&type,&name);
-            printf("id:%i\n",int_id);
-            printf("type:%s\n",type);
-            printf("name:%s\n",name);
+            
+            // if(type[0] == 'm' && type[1] == 'o' && type[2] == 'v' && type[3] == 'i' && type[4] == 'e')
+            if (strncmp(type, "movie", 5) == 0) 
+            {
+                movie new_movie = construct_movie(int_id,name,NULL);
+                
+                add_array_movies(array_movie,new_movie);
+                printf("add id: %i \n",int_id);
+            }
 
-            printf("\n\n");
-            free(name);
-            free(type);
+            fgets(buffer,999,arq);
+
         }
+
+        printf("Escreva 0 para sair e 1 para continuar");
+        scanf("%i",&int_id);
+        if( int_id == 0)
+        {
+            break;
+        }
+
     }
+    free(type);
+    fclose(arq);
     
 
-    fclose(arq);
+    for(int j=0;j<array_movie->size;j++)
+    {
+        printf("%s\n",array_movie->movies[j].title);
+    }
 
 
 
@@ -132,6 +151,7 @@ int main()
         
     }
 
+    destruct_array_movies(array_movie);
     free(buffer);
-    return 1;
+    return 0;
 }
