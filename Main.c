@@ -112,7 +112,7 @@ int main()
 
         }
 
-        printf("Escreva 0 para sair e 1 para continuar \n");
+        printf("Escreva 0 para sair e 1 para carregar mais filmes \n");
         scanf("%i",&int_id);
         if( int_id == 0)
         {
