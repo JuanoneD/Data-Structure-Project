@@ -15,7 +15,7 @@ void actor_split_buffer(char * buffer,int *id,char **name,char **movies){
         new_char_id[i++] = *buffer++;
     }
     new_char_id[i] = '\0';
-    id = atoi(new_char_id + 2);
+    *id = atoi(new_char_id + 2);
     buffer++;
 
     i = 0;
@@ -89,20 +89,20 @@ int main()
 
     array_movies * array_movie = construct_array_movie();
 
-    FILE * arq = fopen("title.basics2.tsv","r");
+    FILE * arq = fopen("title.basics.tsv","r");
 
     while (fgets(buffer,999,arq))
     {   
-        for (int j =0;j<5000;j++){
+        for (int j =0;j<100000;j++){
             movie_split_buffer(buffer,&id,&type,&name);
             
             // if(type[0] == 'm' && type[1] == 'o' && type[2] == 'v' && type[3] == 'i' && type[4] == 'e')
             if (strncmp(type, "movie", 5) == 0) 
             {
-                movie new_movie = construct_movie(int_id,name,NULL);
+                movie new_movie = construct_movie(id,name,NULL);
                 
                 add_array_movies(array_movie,new_movie);
-                printf("add id: %i \n",int_id);
+                //printf("add id: %i \n",id);
             }
 
             if(!fgets(buffer,999,arq))
@@ -112,9 +112,9 @@ int main()
 
         }
 
-        printf("Escreva 0 para sair e 1 para carregar mais filmes \n");
-        scanf("%i",&int_id);
-        if( int_id == 0)
+        printf("Foram carregados %i filmes\nEscreva 0 para sair e 1 para carregar mais filmes \n",array_movie->size);
+        scanf("%i",&id);
+        if( id == 0)
         {
             break;
         }
