@@ -89,11 +89,11 @@ int main()
 
     array_movies * array_movie = construct_array_movie();
 
-    FILE * arq = fopen("title.basics.tsv","r");
+    FILE * arq = fopen("title.basics2.tsv","r");
 
     while (fgets(buffer,999,arq))
     {   
-        for (int j =0;j<1000;j++){
+        for (int j =0;j<5000;j++){
             movie_split_buffer(buffer,&int_id,&type,&name);
             
             // if(type[0] == 'm' && type[1] == 'o' && type[2] == 'v' && type[3] == 'i' && type[4] == 'e')
@@ -105,11 +105,14 @@ int main()
                 printf("add id: %i \n",int_id);
             }
 
-            fgets(buffer,999,arq);
+            if(!fgets(buffer,999,arq))
+            {
+                break;
+            }
 
         }
 
-        printf("Escreva 0 para sair e 1 para continuar");
+        printf("Escreva 0 para sair e 1 para continuar \n");
         scanf("%i",&int_id);
         if( int_id == 0)
         {
@@ -129,27 +132,27 @@ int main()
 
 
 
-    arq = fopen("name.basics2.tsv","r");
-    i = 0;
-    while (fgets(buffer,999,arq))
-    {
+    // arq = fopen("name.basics2.tsv","r");
+    // i = 0;
+    // while (fgets(buffer,999,arq))
+    // {
 
-        if(i++ != 0)
-        {
-           actor_split_buffer(buffer,&char_id,&name,&movies);
-           printf("\nchar_ID: %s",char_id);
-           free(char_id);
-           printf("\nName: %s",name);
-           free(name);
-           printf("\nMovies: %s",movies);
-           free(movies);
+    //     if(i++ != 0)
+    //     {
+    //        actor_split_buffer(buffer,&char_id,&name,&movies);
+    //        printf("\nchar_ID: %s",char_id);
+    //        free(char_id);
+    //        printf("\nName: %s",name);
+    //        free(name);
+    //        printf("\nMovies: %s",movies);
+    //        free(movies);
 
-        }
+    //     }
 
-        printf("\n \n");
+    //     printf("\n \n");
 
         
-    }
+    // }
 
     destruct_array_movies(array_movie);
     free(buffer);

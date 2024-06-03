@@ -1,3 +1,5 @@
+#include <stdlib.h>
+
 #ifndef  Structs
 #define Structs 
     typedef struct movie movie;
