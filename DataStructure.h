@@ -35,13 +35,14 @@
         }
         if(!array->actors)
         {
-            array->capacity ++;
+            array->capacity = 2;
             array->actors = malloc(array->capacity * sizeof(actor));
         }
         if(array->capacity == array->size)
         {
             array->capacity *= 2;
-            realloc(array->actors,array->capacity * sizeof(actor));
+            actor * temp = realloc(array->actors,array->capacity * sizeof(actor));
+            array->actors = temp;
         }
         array->actors[array->size++] = new_actor;
     }
@@ -63,7 +64,7 @@
         return new_array;
     }
 
-    add_array_movies(array_movies * array,movie new_movie)
+    void add_array_movies(array_movies * array,movie new_movie)
     {
         if(!array)
         {
@@ -71,13 +72,14 @@
         }
         if(!array->movies)
         {
-            array->capacity ++;
+            array->capacity = 2;
             array->movies = malloc(array->capacity*sizeof(movie));
         }
         if(array->capacity == array->size)
         {
-            array->capacity*=2;
-            realloc(array->movies,array->capacity*sizeof(movie));
+            array->capacity*= 2;
+            movie * temp = realloc(array->movies,array->capacity*sizeof(movie));
+            array->movies = temp;
         }
         array->movies[array->size++] = new_movie;
     }

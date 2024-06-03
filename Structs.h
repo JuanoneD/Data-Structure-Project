@@ -18,12 +18,6 @@
         }
 
         destruct_node(current->next);
-        // if(current->movie)
-        // {
-        //     free(current->movie->title);
-        //     free(current->movie);
-        // }
-        
         free(current);
     }
     
@@ -37,7 +31,7 @@
     };
 
     
-    movie construct_movie(int id,char *title,node * next)
+    movie  construct_movie(int id,char *title,node * next)
     {
         movie new_movie;
         new_movie.id = id;
