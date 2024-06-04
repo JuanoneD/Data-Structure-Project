@@ -27,7 +27,8 @@
 
     }
 
-    void add_array_actors(array_actors * array,actor new_actor){
+    void add_array_actors(array_actors * array,actor new_actor)
+    {
 
         if(!array)
         {
@@ -45,6 +46,17 @@
             array->actors = temp;
         }
         array->actors[array->size++] = new_actor;
+    }
+
+    void destruct_array_actors(array_actors * array)
+    {
+        for(int i=0; i < array->size;i++)
+        {
+            destruct_node(array->actors[i].movies);
+            free(array->actors[i].name);
+        }
+        free(array->actors);
+        free(array);
     }
 
     typedef struct Dynamic_array_movies

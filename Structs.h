@@ -14,13 +14,13 @@
 
     void destruct_node(node * current)
     {
-        if(!current)
+        node *temp;
+        while(temp)
         {
-            return;
+            temp = current->next;
+            free(current);
+            current = temp;
         }
-
-        destruct_node(current->next);
-        free(current);
     }
     
 
