@@ -5,7 +5,7 @@ int main()
 {
     char buffer[1000];
     char *name,*movies,*type;
-    int id;
+    int id,movie1,movie2,movie3,movie4;
 
     array_movies * array_movie = construct_array_movie();
     array_actors * array_actor = construct_array_actors();
@@ -59,9 +59,9 @@ int main()
         for(int i=0;i <10000;i++)
         {
             actor_split_buffer(buffer,&id,&name,&movies);
-
+            split_movies(movies,&movie1,&movie2,&movie3,&movie4);
+            printf("titulo: %s, filme id: %i %i %i %i",name,movie1,movie2,movie3,movie4);
             actor new_actor = construct_actor(id,name,NULL);
-
             add_array_actors(array_actor,new_actor);
 
             if(!fgets(buffer,999,arq))
