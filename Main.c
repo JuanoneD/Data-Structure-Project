@@ -87,6 +87,7 @@ int main()
         movie3 = binary_search_movies(array_movie,movie3);
         movie4 = binary_search_movies(array_movie,movie4);
 
+
         if(movie1 >= 0)
         {
             
@@ -165,13 +166,14 @@ int main()
             }
         }
     }
+
     for(int i =0;i<array_movie->size;i++)
     {
         node *current = array_movie->movies[i].neighbors;
         printf("\nFilme %s  tem esses vizinhos:",array_movie->movies[i].title);
         while (current)
         {
-            printf(" %s",current->name);
+            printf(" %s,",current->name);
             current = current->next;
         }
     }

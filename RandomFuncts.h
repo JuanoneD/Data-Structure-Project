@@ -134,11 +134,11 @@ int binary_search_movies(array_movies * array,int id_search)
         {
             return mid;
         }
-        if(array->movies[mid].id > id_search)
+        if(array->movies[mid].id < id_search)
         {
             begin = mid + 1;
         }
-        if(array->movies[mid].id < id_search)
+        if(array->movies[mid].id > id_search)
         {
             end = mid - 1;
         }
