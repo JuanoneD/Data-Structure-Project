@@ -7,14 +7,23 @@
 
     struct node
     {
-        movie * movie;
+        int index_film;
+        char * name;
         node * next;
     };
+    node * construct_node(int index,char * name,node * next)
+    {
+        node * new_node = (node*)malloc(sizeof(node));
+        new_node->index_film = index;
+        new_node->name = name;
+        new_node->next = next;
+        return new_node;
+    }
 
 
     void destruct_node(node * current)
     {
-        node *temp;
+        node *temp = current;
         while(temp)
         {
             temp = current->next;
@@ -47,12 +56,12 @@
     {
         int id;
         char * name;
-        node * movies;
+        char * movies;
 
     }actor;
 
     
-    actor construct_actor(int id,char * name,node * movies)
+    actor construct_actor(int id,char * name,char * movies)
     {
         actor new_actor;
         new_actor.id = id;

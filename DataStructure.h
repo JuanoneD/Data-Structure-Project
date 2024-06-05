@@ -52,8 +52,8 @@
     {
         for(int i=0; i < array->size;i++)
         {
-            destruct_node(array->actors[i].movies);
             free(array->actors[i].name);
+            free(array->actors[i].movies);
         }
         free(array->actors);
         free(array);

@@ -3,7 +3,8 @@
 #ifndef RandomFuncts
 #define RandomFuncts
 
-void actor_split_buffer(char * buffer,int *id,char **name,char **movies){
+void actor_split_buffer(char * buffer,int *id,char **name,char **movies)
+{
 
     int i = 0;
     char * new_char_id = (char*)malloc(10 * sizeof(char));
@@ -80,7 +81,8 @@ void movie_split_buffer(char * buffer,int *id,char ** type,char ** title)
     free(new_char_id);
 }
 
-void split_movies(char * movie,int *movie1,int *movie2, int *movie3,int * movie4){
+void split_movies(char * movie,int *movie1,int *movie2, int *movie3,int * movie4)
+{
     char *new_movie = (char*)malloc(10*sizeof(char));
     int i=0;
     while (*movie && *movie != ',')
@@ -118,6 +120,50 @@ void split_movies(char * movie,int *movie1,int *movie2, int *movie3,int * movie4
     *movie4 = atoi(new_movie+2);
     movie ++;
 
+}
+
+int binary_search_movies(array_movies * array,int id_search)
+{
+    int begin = 0;
+    int end = array->size - 1;
+    int mid;
+    while (begin <= end)
+    {
+        mid = begin + (end - begin) / 2;
+        if(array->movies[mid].id == id_search)
+        {
+            return mid;
+        }
+        if(array->movies[mid].id > id_search)
+        {
+            begin = mid + 1;
+        }
+        if(array->movies[mid].id < id_search)
+        {
+            end = mid - 1;
+        }
+    }
+    return -1;
+}
+
+int add_neighbor(movie * movie,node * new)
+{
+    if(!movie->neighbors)
+    {
+        movie->neighbors = new;
+        return 1;
+    }
+    node * temp = movie->neighbors;
+    while (temp->next)
+    {
+        if(temp->index_film == new->index_film)
+        {
+            return 0;
+        }
+        temp = temp->next;
+    }
+    temp->next = new;
+    return 1;
 }
 
 #endif // !1
