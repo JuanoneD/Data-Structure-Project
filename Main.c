@@ -93,8 +93,8 @@ int main()
             
             if(movie2>= 0)
             {   
-                new_node1 = construct_node(movie1,array_movie->movies[movie1].title,NULL);
-                new_node2 = construct_node(movie2,array_movie->movies[movie2].title,NULL);
+                new_node1 = construct_node(movie1,array_movie->movies[movie1].id,array_movie->movies[movie1].title,NULL);
+                new_node2 = construct_node(movie2,array_movie->movies[movie2].id,array_movie->movies[movie2].title,NULL);
 
                 if(add_neighbor(&(*array_movie).movies[movie1],new_node2) == 0)
                 {
@@ -106,13 +106,13 @@ int main()
                 }
                 if(movie3>=0)
                 {
-                    new_node1 = construct_node(movie1,array_movie->movies[movie1].title,NULL);
-                    new_node2 = construct_node(movie2,array_movie->movies[movie2].title,NULL);
-                    new_node3 = construct_node(movie3,array_movie->movies[movie3].title,NULL);
+                    new_node1 = construct_node(movie1,array_movie->movies[movie1].id,array_movie->movies[movie1].title,NULL);
+                    new_node2 = construct_node(movie2,array_movie->movies[movie2].id,array_movie->movies[movie2].title,NULL);
+                    new_node3 = construct_node(movie3,array_movie->movies[movie3].id,array_movie->movies[movie3].title,NULL);
 
                     if(add_neighbor(&(*array_movie).movies[movie1],new_node3) == 1)
                     {
-                        new_node3 = construct_node(movie3,array_movie->movies[movie3].title,NULL);
+                        new_node3 = construct_node(movie3,array_movie->movies[movie3].id,array_movie->movies[movie3].title,NULL);
                     }
                     if(add_neighbor(&(*array_movie).movies[movie2],new_node3) == 0)
                     {
@@ -129,18 +129,18 @@ int main()
 
                     if(movie4 > 0)
                     {
-                        new_node1 = construct_node(movie1,array_movie->movies[movie1].title,NULL);
-                        new_node2 = construct_node(movie2,array_movie->movies[movie2].title,NULL);
-                        new_node3 = construct_node(movie3,array_movie->movies[movie3].title,NULL);
-                        new_node4 = construct_node(movie4,array_movie->movies[movie4].title,NULL);
+                        new_node1 = construct_node(movie1,array_movie->movies[movie1].id,array_movie->movies[movie1].title,NULL);
+                        new_node2 = construct_node(movie2,array_movie->movies[movie2].id,array_movie->movies[movie2].title,NULL);
+                        new_node3 = construct_node(movie3,array_movie->movies[movie3].id,array_movie->movies[movie3].title,NULL);
+                        new_node4 = construct_node(movie4,array_movie->movies[movie4].id,array_movie->movies[movie4].title,NULL);
 
                         if(add_neighbor(&(*array_movie).movies[movie1],new_node4) == 1)
                         {
-                            new_node4 = construct_node(movie4,array_movie->movies[movie4].title,NULL);
+                            new_node4 = construct_node(movie4,array_movie->movies[movie4].id,array_movie->movies[movie4].title,NULL);
                         }
                         if(add_neighbor(&(*array_movie).movies[movie2],new_node4) == 1)
                         {
-                            new_node4 = construct_node(movie4,array_movie->movies[movie4].title,NULL);
+                            new_node4 = construct_node(movie4,array_movie->movies[movie4].id,array_movie->movies[movie4].title,NULL);
                         }
                         if(add_neighbor(&(*array_movie).movies[movie3],new_node4) == 0)
                         {

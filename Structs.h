@@ -8,14 +8,16 @@
     struct node
     {
         int index_film;
+        int id;
         char * name;
         node * next;
     };
-    node * construct_node(int index,char * name,node * next)
+    node * construct_node(int index,int id,char * name,node * next)
     {
         node * new_node = (node*)malloc(sizeof(node));
         new_node->index_film = index;
         new_node->name = name;
+        new_node->id = id;
         new_node->next = next;
         return new_node;
     }
