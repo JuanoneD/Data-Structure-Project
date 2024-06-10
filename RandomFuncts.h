@@ -156,7 +156,7 @@ int add_neighbor(movie * movie,node * new)
     node * temp = movie->neighbors;
     while (temp->next)
     {
-        if(temp->id == new->id)
+        if(temp->id == new->id || new->id == movie->id)
         {
             return 0;
         }
