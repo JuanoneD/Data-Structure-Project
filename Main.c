@@ -6,12 +6,11 @@ int main()
     char buffer[1000];
     char *name,*movies,*type;
     int id,movie1,movie2,movie3,movie4;
-    node *new_node1,*new_node2,*new_node3,*new_node4;
 
     array_movies * array_movie = construct_array_movie();
     array_actors * array_actor = construct_array_actors();
 
-    FILE * arq = fopen("title.basics.tsv","r");
+    FILE * arq = fopen("title.basics2.tsv","r");
 
     while (fgets(buffer,999,arq))
     {   
@@ -55,7 +54,9 @@ int main()
 
 
 
-    arq = fopen("name.basics.tsv","r");
+    arq = fopen("name.basics2.tsv","r");
+
+    fgets(buffer,999,arq);
     while (fgets(buffer,999,arq))
     {
         for(int i=0;i <100000;i++)
@@ -87,82 +88,25 @@ int main()
         movie3 = binary_search_movies(array_movie,movie3);
         movie4 = binary_search_movies(array_movie,movie4);
 
-
-        if(movie1 >= 0)
-        {
-            
-            if(movie2>= 0)
-            {   
-                new_node1 = construct_node(movie1,array_movie->movies[movie1].id,array_movie->movies[movie1].title,NULL);
-                new_node2 = construct_node(movie2,array_movie->movies[movie2].id,array_movie->movies[movie2].title,NULL);
-
-                if(add_neighbor(&(*array_movie).movies[movie1],new_node2) == 0)
+        if(movie2>= 0)
+        {   
+            add_neighbor(array_movie,movie1,movie2);
+            add_neighbor(array_movie,movie2,movie1);
+            if(movie3>=0)
+            {
+                add_neighbor(array_movie,movie1,movie3);
+                add_neighbor(array_movie,movie2,movie3);
+                add_neighbor(array_movie,movie3,movie1);
+                add_neighbor(array_movie,movie3,movie2);
+                if(movie4 >= 0)
                 {
-                    free(new_node2);
+                    add_neighbor(array_movie,movie1,movie4);
+                    add_neighbor(array_movie,movie2,movie4);
+                    add_neighbor(array_movie,movie3,movie4);
+                    add_neighbor(array_movie,movie4,movie1);
+                    add_neighbor(array_movie,movie4,movie2);
+                    add_neighbor(array_movie,movie4,movie3);
                 }
-                if(add_neighbor(&(*array_movie).movies[movie2],new_node1) == 0)
-                {
-                    free(new_node1);
-                }
-                if(movie3>=0)
-                {
-                    new_node1 = construct_node(movie1,array_movie->movies[movie1].id,array_movie->movies[movie1].title,NULL);
-                    new_node2 = construct_node(movie2,array_movie->movies[movie2].id,array_movie->movies[movie2].title,NULL);
-                    new_node3 = construct_node(movie3,array_movie->movies[movie3].id,array_movie->movies[movie3].title,NULL);
-
-                    if(add_neighbor(&(*array_movie).movies[movie1],new_node3) == 1)
-                    {
-                        new_node3 = construct_node(movie3,array_movie->movies[movie3].id,array_movie->movies[movie3].title,NULL);
-                    }
-                    if(add_neighbor(&(*array_movie).movies[movie2],new_node3) == 0)
-                    {
-                        free(new_node3);
-                    }
-                    if(add_neighbor(&(*array_movie).movies[movie3],new_node1) == 0)
-                    {
-                        free(new_node1);
-                    }
-                    if(add_neighbor(&(*array_movie).movies[movie3],new_node2) == 0)
-                    {
-                        free(new_node2);
-                    }
-
-                    if(movie4 > 0)
-                    {
-                        new_node1 = construct_node(movie1,array_movie->movies[movie1].id,array_movie->movies[movie1].title,NULL);
-                        new_node2 = construct_node(movie2,array_movie->movies[movie2].id,array_movie->movies[movie2].title,NULL);
-                        new_node3 = construct_node(movie3,array_movie->movies[movie3].id,array_movie->movies[movie3].title,NULL);
-                        new_node4 = construct_node(movie4,array_movie->movies[movie4].id,array_movie->movies[movie4].title,NULL);
-
-                        if(add_neighbor(&(*array_movie).movies[movie1],new_node4) == 1)
-                        {
-                            new_node4 = construct_node(movie4,array_movie->movies[movie4].id,array_movie->movies[movie4].title,NULL);
-                        }
-                        if(add_neighbor(&(*array_movie).movies[movie2],new_node4) == 1)
-                        {
-                            new_node4 = construct_node(movie4,array_movie->movies[movie4].id,array_movie->movies[movie4].title,NULL);
-                        }
-                        if(add_neighbor(&(*array_movie).movies[movie3],new_node4) == 0)
-                        {
-                            free(new_node4);
-                        }
-                        if(add_neighbor(&(*array_movie).movies[movie4],new_node1) == 0)
-                        {
-                            free(new_node1);
-                        }
-                        if(add_neighbor(&(*array_movie).movies[movie4],new_node2) == 0)
-                        {
-                            free(new_node2);
-                        }
-                        if(add_neighbor(&(*array_movie).movies[movie4],new_node3) == 0)
-                        {
-                            free(new_node3);
-                        }
-                    }
-
-                }
-
-                
             }
         }
     }
@@ -177,11 +121,8 @@ int main()
             current = current->next;
         }
     }
-
-    
-    
     destruct_array_actors(array_actor);
     destruct_array_movies(array_movie);    
-    printf("SUS");
+    printf("\nSUS");
     return 0;
 }

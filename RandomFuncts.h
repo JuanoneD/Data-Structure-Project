@@ -146,24 +146,29 @@ int binary_search_movies(array_movies * array,int id_search)
     return -1;
 }
 
-int add_neighbor(movie * movie,node * new)
+void add_neighbor(array_movies * array,int movie_neighbor,int movie_index)
 {
-    if(!movie->neighbors)
+    node *newnode = construct_node(movie_index,array->movies[movie_index].id,array->movies[movie_index].title,NULL);
+
+    printf("\n%s add no %s",array->movies[movie_neighbor].title,newnode->name);
+
+    if(!(*array).movies[movie_neighbor].neighbors)
     {
-        movie->neighbors = new;
-        return 1;
+        (*array).movies[movie_neighbor].neighbors = newnode;
+        return;
     }
-    node * temp = movie->neighbors;
-    while (temp->next)
+    
+    node* current = (*array).movies[movie_neighbor].neighbors;
+    while(current->next)
     {
-        if(temp->id == new->id || new->id == movie->id)
+        if(array->movies[movie_index].id == newnode->id)
         {
-            return 0;
+            free(newnode);
+            return;
         }
-        temp = temp->next;
+        current = current->next;
     }
-    temp->next = new;
-    return 1;
+    current->next = newnode;
 }
 
 #endif // !1
