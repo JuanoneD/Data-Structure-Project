@@ -114,7 +114,7 @@ int main()
 
     fclose(arq);
 
-    FILE *output = fopen("input.dot.txt","w");
+    FILE *output = fopen("input.dot","w");
 
     fprintf(output,"graph { concentrate=true\n");
     for(int i =0;i<array_movie->size;i++)
