@@ -161,7 +161,7 @@ void add_neighbor(array_movies * array,int movie_neighbor,int movie_index)
     node* current = (*array).movies[movie_neighbor].neighbors;
     while(current->next)
     {
-        if(array->movies[movie_index].id == newnode->id)
+        if(array->movies[movie_index].id == current->id)
         {
             free(newnode);
             return;

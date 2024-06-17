@@ -114,10 +114,9 @@ int main()
     for(int i =0;i<array_movie->size;i++)
     {
         node *current = array_movie->movies[i].neighbors;
-        printf("\nFilme %s  tem esses vizinhos:",array_movie->movies[i].title);
         while (current)
         {
-            printf(" %s,",current->name);
+            printf("\n%s -- %s",array_movie->movies[i].title,current->name);
             current = current->next;
         }
     }
