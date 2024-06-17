@@ -150,8 +150,6 @@ void add_neighbor(array_movies * array,int movie_neighbor,int movie_index)
 {
     node *newnode = construct_node(movie_index,array->movies[movie_index].id,array->movies[movie_index].title,NULL);
 
-    printf("\n%s add no %s",array->movies[movie_neighbor].title,newnode->name);
-
     if(!(*array).movies[movie_neighbor].neighbors)
     {
         (*array).movies[movie_neighbor].neighbors = newnode;

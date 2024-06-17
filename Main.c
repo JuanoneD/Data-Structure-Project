@@ -1,4 +1,5 @@
 #include "RandomFuncts.h"
+#include <stdio.h>
 
 
 int main()
@@ -111,15 +112,22 @@ int main()
         }
     }
 
+    fclose(arq);
+
+    FILE *output = fopen("input.dot.txt","w");
+
+    fprintf(output,"graph { concentrate=true\n");
     for(int i =0;i<array_movie->size;i++)
     {
         node *current = array_movie->movies[i].neighbors;
         while (current)
         {
-            printf("\n%s -- %s",array_movie->movies[i].title,current->name);
+            fprintf(output,"\"%s\" -- \"%s\" \n",array_movie->movies[i].title,current->name);
             current = current->next;
         }
     }
+    fprintf(output,"}");
+    fclose(output);
     destruct_array_actors(array_actor);
     destruct_array_movies(array_movie);    
     printf("\nSUS");
