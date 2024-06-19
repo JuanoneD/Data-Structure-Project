@@ -11,11 +11,11 @@ int main()
     array_movies * array_movie = construct_array_movie();
     array_actors * array_actor = construct_array_actors();
 
-    FILE * arq = fopen("title.basics2.tsv","r");
+    FILE * arq = fopen("title.basics.tsv","r");
 
     while (fgets(buffer,999,arq))
     {   
-        for (int j =0;j<100000;j++)
+        for (int j =0;j<1000;j++)
         {
             movie_split_buffer(buffer,&id,&type,&name);
             
@@ -55,12 +55,12 @@ int main()
 
 
 
-    arq = fopen("name.basics2.tsv","r");
+    arq = fopen("name.basics.tsv","r");
 
     fgets(buffer,999,arq);
     while (fgets(buffer,999,arq))
     {
-        for(int i=0;i <100000;i++)
+        for(int i=0;i <1000;i++)
         {
             actor_split_buffer(buffer,&id,&name,&movies);
             actor new_actor = construct_actor(id,name,movies);
@@ -89,7 +89,7 @@ int main()
         movie3 = binary_search_movies(array_movie,movie3);
         movie4 = binary_search_movies(array_movie,movie4);
 
-        if(movie2>= 0)
+        if(movie2>= 0 && movie1>=0)
         {   
             add_neighbor(array_movie,movie1,movie2);
             add_neighbor(array_movie,movie2,movie1);
@@ -123,6 +123,7 @@ int main()
         while (current)
         {
             fprintf(output,"\"%s\" -- \"%s\" \n",array_movie->movies[i].title,current->name);
+            printf("\"%s\" -- \"%s\" \n",array_movie->movies[i].title,current->name);
             current = current->next;
         }
     }
