@@ -90,8 +90,7 @@
         if(array->capacity == array->size)
         {
             array->capacity*= 2;
-            movie * temp = realloc(array->movies,array->capacity*sizeof(movie));
-            array->movies = temp;
+            array->movies = realloc(array->movies,array->capacity*sizeof(movie));
         }
         array->movies[array->size++] = new_movie;
     }

@@ -39,7 +39,7 @@
     struct movie
     {
         int id;
-        char * title;
+        char title[100];
         node * neighbors;
 
     };
