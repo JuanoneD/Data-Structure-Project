@@ -107,9 +107,4 @@
         free(array);
     }
 
-
-
-    
-
-
 #endif // DEBUG

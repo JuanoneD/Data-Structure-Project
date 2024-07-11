@@ -146,27 +146,27 @@ int binary_search_movies(array_movies * array,int id_search)
     return -1;
 }
 
-void add_neighbor(array_movies * array,int movie_neighbor,int movie_index)
-{
-    node *newnode = construct_node(movie_index,array->movies[movie_index].id,array->movies[movie_index].title,NULL);
+// void add_neighbor(array_movies * array,int movie_neighbor,int movie_index)
+// {
+//     node *newnode = construct_node(movie_index,array->movies[movie_index].id,array->movies[movie_index].title,NULL);
 
-    if(!(*array).movies[movie_neighbor].neighbors)
-    {
-        (*array).movies[movie_neighbor].neighbors = newnode;
-        return;
-    }
+//     if(!(*array).movies[movie_neighbor].neighbors)
+//     {
+//         (*array).movies[movie_neighbor].neighbors = newnode;
+//         return;
+//     }
     
-    node* current = (*array).movies[movie_neighbor].neighbors;
-    while(current->next)
-    {
-        if(array->movies[movie_index].id == current->id)
-        {
-            free(newnode);
-            return;
-        }
-        current = current->next;
-    }
-    current->next = newnode;
-}
+//     node* current = (*array).movies[movie_neighbor].neighbors;
+//     while(current->next)
+//     {
+//         if(array->movies[movie_index].id == current->id)
+//         {
+//             free(newnode);
+//             return;
+//         }
+//         current = current->next;
+//     }
+//     current->next = newnode;
+// }
 
 #endif // !1
