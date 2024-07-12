@@ -58,7 +58,7 @@
     typedef struct actor
     {
         int id;
-        char  name[1000];
+        char  name[100];
         node * movies;
 
     }actor;

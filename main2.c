@@ -9,7 +9,6 @@ int split_buffer(char * buffer,char * split, char key)
         split[i++] = *buffer++;
     }
     split[i++] = '\0';
-    //printf("\n%s",split);
     return i;
 }
 
@@ -28,7 +27,6 @@ int main()
 
     FILE * arq = fopen("title.basics.tsv","r");
     fgets(buffer,99,arq);
-    int count = 0;
     while (fgets(buffer,sizeof(buffer),arq))
     {
         point = split_buffer(buffer,id_char,'\t');
@@ -43,20 +41,20 @@ int main()
             add_array_movies(array_mov,new_movie);
             //printf("\n%i",array_mov->movies[count++].id);
         }
-            count ++;
     }
     printf("\n%i",array_mov->size);
-    printf("\n%i",count);
     fclose(arq);
 
 
-    arq = fopen("name.basics2.tsv","r");
+    arq = fopen("name.basics.tsv","r");
     fgets(buffer,99,arq);
+
+    node * new_node;
 
     while (fgets(buffer,sizeof(buffer),arq))
     {
         point = split_buffer(buffer,id_char,'\t');
-        int id = atoi(&id_char[2]);
+        int id_actor = atoi(&id_char[2]);
         point+= split_buffer(&buffer[point],name,'\t');
         for(int i=0;i<4;i++)
         {
@@ -65,23 +63,36 @@ int main()
         point = 0;
         char split_id[100];
         int array_ids[4];
-        printf("\n");
         for(int i=0;i<4;i++)
         {
             point += split_buffer(&id_char[point],split_id,',');
-            //printf("%s == ",split_id);
             int aux = atoi(&split_id[2]);
             if (i!=0 && array_ids[i] == aux)
             {
                 break;
             }
             array_ids[i] = aux;
-            //printf("%i, ",array_ids[i]);
             aux = binary_search_movies(array_mov,array_ids[i]);
-            printf("\n%i ",array_ids[i]);
-            if (aux >=0)printf("%s",array_mov->movies[aux].title);
+            movie * actor_movie = aux >=0?&array_mov->movies[aux]:NULL;
+
+            if(actor_movie)
+            {
+                if(i == 0)
+                {
+                    new_node =  construct_node(aux,actor_movie->id,actor_movie,NULL);
+                }
+                else
+                {
+                    node * node_2 = construct_node(aux,actor_movie->id,actor_movie,NULL);
+                    node_2->next = new_node;
+                    new_node = node_2;
+                }
+            }
         }
+        actor new_actor = construct_actor(id_actor,name,new_node);
+        add_array_actors(array_act,new_actor);
     }
+    printf("\n%i",array_act->size);
     destruct_array_actors(array_act);
     destruct_array_movies(array_mov);
     printf("\nSucesso");

@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include<windows.h>
 
 
 #ifndef DataStructure
@@ -36,13 +37,18 @@
         }
         if(!array->actors)
         {
-            array->capacity = 2;
-            array->actors = malloc(array->capacity * sizeof(actor));
+            array->capacity = 1024;
+            array->actors = malloc(array->capacity*sizeof(actor));
         }
         if(array->capacity == array->size)
         {
             array->capacity *= 2;
             actor * temp = realloc(array->actors,array->capacity * sizeof(actor));
+            if (!temp)
+            {
+                printf("\nERRO NA ALOCACAO DE MEMORIA");
+                return;
+            }
             array->actors = temp;
         }
         array->actors[array->size++] = new_actor;
@@ -90,7 +96,9 @@
         if(array->capacity == array->size)
         {
             array->capacity*= 2;
-            array->movies = realloc(array->movies,array->capacity*sizeof(movie));
+            movie * temp = realloc(array->movies,array->capacity*sizeof(movie));
+            if (!temp)printf("\nERRO NA ALOCACAO DE MEMORIA");
+            array->movies = temp;
         }
         array->movies[array->size++] = new_movie;
     }
