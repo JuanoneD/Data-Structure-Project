@@ -1,16 +1,215 @@
-#include "RandomFuncts.h"
-#include <stdio.h>
 
-int split_buffer(char * buffer,char * split, char key)
-{
-    int i = 0;
-    while(*buffer && *buffer != key && *buffer != '\n')
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+///##########################################STRUCTS####################################
+    typedef struct movie movie;
+    typedef struct node node;
+
+    struct node
     {
-        split[i++] = *buffer++;
+        int index_film;
+        int id;
+        movie * movie;
+        node * next;
+    };
+    node * construct_node(int index,int id,movie * name,node * next)
+    {
+        node * new_node = (node*)malloc(sizeof(node));
+        new_node->index_film = index;
+        new_node->movie = name;
+        new_node->id = id;
+        new_node->next = next;
+        return new_node;
     }
-    split[i++] = '\0';
-    return i;
-}
+
+
+    void destruct_node(node * current)
+    {
+        node *temp = current;
+        while(temp)
+        {
+            temp = current->next;
+            free(current);
+            current = temp;
+        }
+    }
+    
+
+    struct movie
+    {
+        int id;
+        char title[100];
+        node * neighbors;
+
+    };
+
+    
+    movie  construct_movie(int id,char *title,node * next)
+    {
+        movie new_movie;
+        new_movie.id = id;
+        strcpy(new_movie.title,title);
+        new_movie.neighbors = next;
+        return new_movie;
+    }
+    
+
+    typedef struct actor
+    {
+        int id;
+        char  name[100];
+        node * movies;
+
+    }actor;
+
+    
+    actor construct_actor(int id,char * name,node * movies)
+    {
+        actor new_actor;
+        new_actor.id = id;
+        strcpy(new_actor.name,name);
+        new_actor.movies = movies;
+        return new_actor;
+    }
+
+
+///##########################################STRUCTS####################################
+
+//// ############################################################################### DATA STRUCTURE ######################################################
+    typedef struct Dynamic_array_movies
+    {
+        int size;
+        int capacity;
+        movie * movies;
+        
+    }array_movies;
+
+    array_movies * construct_array_movie()
+    {
+        array_movies * new_array = malloc(sizeof(array_movies));
+        new_array->size = 0;
+        new_array->capacity = 0;
+        new_array->movies = NULL;
+        return new_array;
+    }
+
+    void add_array_movies(array_movies * array,movie new_movie)
+    {
+        if(!array)
+        {
+            return;
+        }
+        if(!array->movies)
+        {
+            array->capacity = 2;
+            array->movies = malloc(array->capacity*sizeof(movie));
+        }
+        if(array->capacity == array->size)
+        {
+            array->capacity*= 2;
+            movie * temp = realloc(array->movies,array->capacity*sizeof(movie));
+            if (!temp)printf("\nERRO NA ALOCACAO DE MEMORIA");
+            array->movies = temp;
+        }
+        array->movies[array->size++] = new_movie;
+    }
+
+    void destruct_array_movies(array_movies * array)
+    {
+        for(int i = 0;i<array->size;i++)
+        {
+            destruct_node(array->movies[i].neighbors);
+        }
+        free(array->movies);
+        free(array);
+    }
+
+    typedef struct dynamic_array_actors
+    {
+        int size;
+        int capacity;
+        actor ** actors;
+        
+    }array_actors;
+
+    array_actors * construct_array_actors()
+    {
+        array_actors * new_array = (array_actors*)malloc(sizeof(array_actors));
+        new_array->capacity = 0;
+        new_array->size = 0;
+        new_array->actors = NULL;
+        return new_array;
+    }
+
+    void add_array_actors(array_actors * array,actor new_actor)
+    {
+        actor * new_node = malloc(sizeof(actor));
+        *new_node = new_actor;
+        if(!array->actors)
+        {
+            array->capacity = 100;
+            array->actors = (actor**)malloc(array->capacity*sizeof(actor*));
+        }
+        if(array->capacity == array->size)
+        {
+            array->capacity*=2;
+            actor ** temp = realloc(array->actors,array->capacity*sizeof(actor*));
+            if(!temp)printf("ERRO NA ALOCACAO DE MEMORIA");
+            array->actors = temp;
+        }
+        array->actors[array->size++] = new_node;
+    }
+
+    void destruct_array_actors(array_actors * array)
+    {
+        for(int i=0; i < array->size;i++)
+        {
+            destruct_node(array->actors[i]->movies);
+            free(array->actors[i]);
+        }
+        free(array->actors);
+        free(array);
+    }
+
+//// ############################################################################### DATA STRUCTURE ######################################################
+
+///////////######################################### RANDOM FUNCTS ###########################################################
+    int binary_search_movies(array_movies * array,int id_search)
+    {
+        int begin = 0;
+        int end = array->size - 1;
+        int mid;
+        while (begin <= end)
+        {
+            mid = begin + (end - begin) / 2;
+            if(array->movies[mid].id == id_search)
+            {
+                return mid;
+            }
+            if(array->movies[mid].id < id_search)
+            {
+                begin = mid + 1;
+            }
+            if(array->movies[mid].id > id_search)
+            {
+                end = mid - 1;
+            }
+        }
+        return -1;
+    }
+
+    int split_buffer(char * buffer,char * split, char key)
+    {
+        int i = 0;
+        while(*buffer && *buffer != key && *buffer != '\n')
+        {
+            split[i++] = *buffer++;
+        }
+        split[i++] = '\0';
+        return i;
+    }
+///////////######################################### RANDOM FUNCTS ###########################################################
 
 
 int main()
@@ -67,7 +266,7 @@ int main()
         {
             point += split_buffer(&id_char[point],split_id,',');
             int aux = atoi(&split_id[2]);
-            if (i!=0 && array_ids[i] == aux)
+            if (i!=0 && array_ids[i] == aux || array_ids[i-1] == aux)
             {
                 break;
             }
@@ -93,8 +292,18 @@ int main()
         add_array_actors(array_act,new_actor);
     }
     printf("\n%i",array_act->size);
+    for(int i=0;i<array_act->size;i++)
+    {
+        printf("\n%i,%s == ",array_act->actors[i]->id,array_act->actors[i]->name);
+        node * temp = array_act->actors[i]->movies;
+        while(temp)
+        {
+            printf("%s,",temp->movie->title);
+            temp = temp->next;
+        }
+    }
+    printf("\nSucesso");
     destruct_array_actors(array_act);
     destruct_array_movies(array_mov);
-    printf("\nSucesso");
     return 1;
 }
