@@ -26,12 +26,15 @@
 
     void destruct_node(node * current)
     {
-        node *temp = current;
-        while(temp)
+        if(!current)return;
+        node *temp;
+        //printf("\n");
+        while(current->next)
         {
-            temp = current->next;
-            free(current);
-            current = temp;
+            temp = current;
+            current = current->next;
+            //printf("\n%i",temp->id);
+            free(temp);
         }
     }
     
@@ -163,11 +166,6 @@
 
     void destruct_array_actors(array_actors * array)
     {
-        for(int i=0; i < array->size;i++)
-        {
-            destruct_node(array->actors[i]->movies);
-            free(array->actors[i]);
-        }
         free(array->actors);
         free(array);
     }
@@ -208,6 +206,28 @@
         }
         split[i++] = '\0';
         return i;
+    }
+
+    void add_neigbor(movie * principal_movie,movie * neigbor,int index_neigbor)
+    {
+        if(neigbor->id == principal_movie->id) return;
+        node * new_node = construct_node(index_neigbor,neigbor->id,neigbor,NULL);
+        if(!principal_movie->neighbors)
+        {
+            principal_movie->neighbors = new_node;
+            return;
+        }
+        node * current = principal_movie->neighbors;
+        while (current->next)
+        {
+            if(current->id == neigbor->id)
+            {
+                free(new_node);
+                return;
+            }
+            current = current->next;
+        }
+        current->next = new_node;
     }
 ///////////######################################### RANDOM FUNCTS ###########################################################
 
@@ -262,6 +282,7 @@ int main()
         point = 0;
         char split_id[100];
         int array_ids[4];
+        new_node = NULL;
         for(int i=0;i<4;i++)
         {
             point += split_buffer(&id_char[point],split_id,',');
@@ -276,7 +297,7 @@ int main()
 
             if(actor_movie)
             {
-                if(i == 0)
+                if(!new_node)
                 {
                     new_node =  construct_node(aux,actor_movie->id,actor_movie,NULL);
                 }
@@ -294,16 +315,38 @@ int main()
     printf("\n%i",array_act->size);
     for(int i=0;i<array_act->size;i++)
     {
-        printf("\n%i,%s == ",array_act->actors[i]->id,array_act->actors[i]->name);
-        node * temp = array_act->actors[i]->movies;
-        while(temp)
+        actor * current_actor = array_act->actors[i];
+        //printf("\n%i",current_actor->id);
+        node * temp = current_actor->movies;
+        while (temp)
         {
-            printf("%s,",temp->movie->title);
+            node * neigbor = current_actor->movies;
+            while (neigbor)
+            {
+                add_neigbor(temp->movie,neigbor->movie,neigbor->index_film);
+                neigbor = neigbor->next;
+            }
             temp = temp->next;
         }
+        destruct_node(current_actor->movies);
+        free(current_actor);
+        if( i%100000 == 0)printf("\n%i",i);
     }
-    printf("\nSucesso");
+    ///########################
+    for(int i=0;i<array_mov->size;i++)
+    {
+        movie * current_movie = &array_mov->movies[i];
+        //printf("\n%i: ",current_movie->id);
+        node * temp = current_movie->neighbors;
+        while (temp)
+        {
+            //printf("%i ",temp->movie->id);
+            temp = temp->next;
+        }
+        
+    }
     destruct_array_actors(array_act);
     destruct_array_movies(array_mov);
+    printf("\nSucesso");
     return 1;
 }
