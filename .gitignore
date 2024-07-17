@@ -1,0 +1,5 @@
+/.vscode/*
+/output/*
+/input.dot
+/name.basics.tsv
+/title.basics.tsv
