@@ -261,7 +261,7 @@ int main()
             //printf("\n%i",array_mov->movies[count++].id);
         }
     }
-    printf("\n%i",array_mov->size);
+    printf("\nForam lidos %i filmes",array_mov->size);
     fclose(arq);
 
 
@@ -312,7 +312,8 @@ int main()
         actor new_actor = construct_actor(id_actor,name,new_node);
         add_array_actors(array_act,new_actor);
     }
-    printf("\n%i",array_act->size);
+    fclose(arq);
+    printf("\nForam lidos %i atores",array_act->size);
     for(int i=0;i<array_act->size;i++)
     {
         actor * current_actor = array_act->actors[i];
@@ -330,23 +331,26 @@ int main()
         }
         destruct_node(current_actor->movies);
         free(current_actor);
-        if( i%100000 == 0)printf("\n%i",i);
+        //if( i%100000 == 0)printf("\n%i",i);
     }
     ///########################
+    arq = fopen("input.dot","w");
+    fprintf(arq,"graph { concetrate = true\n");
+
     for(int i=0;i<array_mov->size;i++)
     {
         movie * current_movie = &array_mov->movies[i];
-        //printf("\n%i: ",current_movie->id);
         node * temp = current_movie->neighbors;
         while (temp)
         {
-            //printf("%i ",temp->movie->id);
+            fprintf(arq,"%s -- %s\n",current_movie->title,temp->movie->title);
             temp = temp->next;
         }
-        
     }
+    fprintf(arq,"}");
+    fclose(arq);
     destruct_array_actors(array_act);
     destruct_array_movies(array_mov);
-    printf("\nSucesso");
+    printf("\nGrafo gerado com sucesso!!");
     return 1;
 }
