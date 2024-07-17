@@ -217,6 +217,7 @@
             principal_movie->neighbors = new_node;
             return;
         }
+        if(principal_movie->neighbors->id == neigbor->id)return;
         node * current = principal_movie->neighbors;
         while (current->next)
         {
