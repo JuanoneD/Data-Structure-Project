@@ -202,7 +202,14 @@
         int i = 0;
         while(*buffer && *buffer != key && *buffer != '\n')
         {
-            split[i++] = *buffer++;
+            if(*buffer != '"')
+            {
+                split[i++] = *buffer++;
+            }
+            else
+            {
+                buffer++;
+            }
         }
         split[i++] = '\0';
         return i;
@@ -344,7 +351,7 @@ int main()
         node * temp = current_movie->neighbors;
         while (temp)
         {
-            fprintf(arq,"%s -- %s\n",current_movie->title,temp->movie->title);
+            fprintf(arq,"\"%s\"  -- \"%s\" \n",current_movie->title,temp->movie->title);
             temp = temp->next;
         }
     }
