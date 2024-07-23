@@ -1,6 +1,8 @@
 /.vscode/*
 /output/*
 /main2.exe
+/main.exe
 /input.dot
 /name.basics.tsv
 /title.basics.tsv
+/.dist/*
