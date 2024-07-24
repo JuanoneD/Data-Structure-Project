@@ -44,7 +44,7 @@
     struct movie
     {
         int id;
-        char title[100];
+        char title[120];
         node * neighbors;
 
     };
@@ -63,7 +63,7 @@
     typedef struct actor
     {
         int id;
-        char  name[100];
+        char  name[90];
         node * movies;
 
     }actor;
