@@ -351,7 +351,7 @@ int main()
     arq = fopen("input.dot","w");
     fprintf(arq,"graph { concetrate = true\n");
 
-    for(int i=0;i<array_mov->size;i++)
+    for(int i=0;i<1000;i++)
     {
         movie * current_movie = &array_mov->movies[i];
         node * temp = current_movie->neighbors;
